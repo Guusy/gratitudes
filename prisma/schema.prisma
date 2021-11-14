@@ -1,0 +1,20 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Gratitude {
+  id        Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  title   String
+  item_1   String
+  item_2   String?
+  item_3   String?
+  item_4   String?
+  item_5   String?
+  active Boolean @default(true)
+}
