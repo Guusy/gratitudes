@@ -1,21 +1,27 @@
 import { Card, CardContent } from '@mui/material';
 import Head from 'next/head'
 import Image from 'next/image'
+import { useState } from 'react';
 import AddGratitudeDialog from '../components/AddGratitudeDialog';
+import GratitudesFilters from '../components/GratitudesFilters';
 import styles from '../styles/Home.module.css'
 import { prisma } from './api/_base';
 
 export default function Blog({ gratitudes = [] }) {
-  console.log('gra', gratitudes);
+  const [gratitudesState, setGratitudesState] = useState(gratitudes)
+  const onChangeFilters = (newGratitudes) => {
+    setGratitudesState(newGratitudes)
+  }
   return (
     <div className={styles.container}>
+      <GratitudesFilters gratitudes={gratitudes} onFilter={onChangeFilters} />
       <div style={{
         display: 'flex',
         justifyContent: 'space-between',
         flexWrap: 'wrap'
       }}>
-        {gratitudes.map((gratitude) => (
-          <Card key={gratitudes.id} style={{ marginBottom: '1rem'}}>
+        {gratitudesState.map((gratitude) => (
+          <Card key={gratitudes.id} style={{ marginBottom: '1rem' }}>
             <CardContent>
               {gratitude.title}
               <ul>
@@ -51,8 +57,6 @@ export async function getStaticProps() {
   // Call an external API endpoint to get posts.
   // You can use any data fetching library
   const gratitudes = await prisma.gratitude.findMany();
-  console.log('SSr', gratitudes);
-  console.log('JSON.stringify(gratitudes)', JSON.stringify(gratitudes));
   return {
     props: {
       gratitudes: JSON.parse(JSON.stringify(gratitudes)),

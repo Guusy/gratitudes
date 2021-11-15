@@ -20,13 +20,13 @@ import GratitudesClient from '../clients/GratitudesClient';
 const gratitudesFields = Array.from({ length: 5 }, (_, i) => i + 1)
 const AddGratitudeDialog = () => {
     const [open, setOpen] = useState(false);
-    const [ form, setForm ] = useState({
-        title:'',
-        item_1:'',
-        item_2:'',
-        item_3:'',
-        item_4:'',
-        item_5:'',
+    const [form, setForm] = useState({
+        title: '',
+        item_1: '',
+        item_2: '',
+        item_3: '',
+        item_4: '',
+        item_5: '',
     })
     const handleClickOpen = () => {
         setOpen(true);
@@ -37,7 +37,6 @@ const AddGratitudeDialog = () => {
     };
 
     const saveGratitude = async () => {
-        console.log('send', form)
         try {
             await GratitudesClient.add(form)
             setOpen(false);
@@ -46,16 +45,23 @@ const AddGratitudeDialog = () => {
         }
     }
 
-    const onChangeTitle = ({ target: { value }}) => setForm( {...form,  title: value}) 
+    const onChangeTitle = ({ target: { value } }) => setForm({ ...form, title: value })
 
-    const onChangeGratitudeField = (id) => ({ target: { value }})=> {
-        const newForm = {...form}
+    const onChangeGratitudeField = (id) => ({ target: { value } }) => {
+        const newForm = { ...form }
         newForm[`item_${id}`] = value
-        setForm(newForm) 
+        setForm(newForm)
     }
 
     return <div>
-        <Fab color="primary" aria-label="add" onClick={handleClickOpen}>
+        <Fab style={{
+            position: 'absolute',
+            bottom: '1em',
+            right: '1.5em'
+        }}
+            color="primary"
+            aria-label="add"
+            onClick={handleClickOpen}>
             <AddIcon />
         </Fab>
         <Dialog

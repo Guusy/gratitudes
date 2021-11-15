@@ -25,8 +25,6 @@ export default async function handle(req, res) {
     res.setHeader("Cache-Control", "public, max-age=0, stale-while-revalidate=1");
 
     if (req.method === 'POST') {
-        console.log(req.body)
-        // Process a POST request
         await prisma.gratitude.create({ data: req.body })
         res.json({ status: 'ok'});
 
