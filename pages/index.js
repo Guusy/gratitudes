@@ -23,7 +23,7 @@ export default function Blog({ gratitudes = [] }) {
   return (
     <ul>
       {gratitudes.map((gratitude) => (
-        <li>{gratitude.title}</li>
+        <li key={gratitudes.id}>{gratitude.title}</li>
       ))}
       <button onClick={addGratitude}> Add </button>
     </ul>
