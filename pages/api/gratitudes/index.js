@@ -28,6 +28,8 @@ export default async function handle(req, res) {
         console.log(req.body)
         // Process a POST request
         await prisma.gratitude.create({ data: req.body })
+        res.json({ status: 'ok'});
+
     } else {
         // Handle any other HTTP method
         const posts = await prisma.gratitude.findMany();
